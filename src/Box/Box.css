@@ -3,7 +3,7 @@
     width: 200px;
     height: 200px;
     color: black;
-    background-color: lightslategrey;
+    background-color: #bfc1c3;
     position: absolute;
     border-radius: 20px;
     box-shadow: 5px 10px 10px #888888;
@@ -16,7 +16,8 @@ ul{
 
 .box p{
     position: absolute;
-    left: 38%;    
+    left: 38%;  
+    top: 33%;  
 }
 
 li{

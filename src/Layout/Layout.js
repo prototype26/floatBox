@@ -9,7 +9,7 @@ const Layout = ()=>{
     const [liItemId,setLiItemId] = useState("item0");
     const [topVal,setTopVal] = useState(boxCount+100);
     const [leftVal,setLeftVal] = useState(boxCount+100);
-
+    
     const addBoxHandler=()=>{
         setBoxCount(boxCount+1);
         setTopVal(boxCount+100);
@@ -20,101 +20,93 @@ const Layout = ()=>{
                                   leftVal={leftVal} 
                                   zindex={boxCount+10}
                                   boxClickHandler={boxClickHandler}
-                                  boxKeyCheckHandler={boxKeyCheckHandler}
                             />]);
     }
-    
+
     const boxKeyCheckHandler = (event)=>{
         switch (event.which) {
-            case 8:
+            case 8://delete keycode
                 if(keyBoardVal){
                     deleteBoxHandler();
                 }
-                
                 break;
-            case 38:
-            case 87:
+            case 38://up arrow code
+            case 87://W code
                 if(keyBoardVal){
                 boxArr.forEach((ele) => {
                     if(ele.props.id == liItemId)
                     {
-                    //event target is string value    
-                    var topOffset = parseInt((event.target.style.top.split("px")[0])) - 15;
+                    var topOffset = parseInt((document.querySelector(`#${liItemId} div`).style.top.split("px")[0])) - 15;
                     if(topOffset>-100)
                     {
-                        event.target.style.top = topOffset+"px";
+                        document.querySelector(`#${liItemId} div`).style.top = topOffset+"px";
                     }
                     }
                 })
-                console.log("UP pressed");
                 }
                 break;
-            case 40:
-            case 83:
+            case 40://down arrow code
+            case 83://S code
                 if(keyBoardVal){
                 boxArr.forEach((ele) => {
                     if(ele.props.id == liItemId)
                     {
-                    //event target is string value    
-                    var topOffset = parseInt((event.target.style.top.split("px")[0])) + 15;
+                    var topOffset = parseInt((document.querySelector(`#${liItemId} div`).style.top.split("px")[0])) + 15;
                     if(topOffset < 300)
                     {
-                        event.target.style.top = topOffset+"px";
+                        document.querySelector(`#${liItemId} div`).style.top = topOffset+"px";
                     }
                     }
                 })
-                console.log("DOWN pressed");
                 }
                 break;
-            case 37:
-            case 65:
+            case 37://left arrow code
+            case 65://A code
                 if(keyBoardVal){
                 boxArr.forEach((ele) => {
                     if(ele.props.id == liItemId)
                     {
-                    //event target is string value    
-                    var leftOffset = parseInt((event.target.style.left.split("px")[0])) - 15;
+                    var leftOffset = parseInt((document.querySelector(`#${liItemId} div`).style.left.split("px")[0])) - 15;
                     if(leftOffset > -515)
                     {
-                        event.target.style.left = leftOffset+"px";
+                        document.querySelector(`#${liItemId} div`).style.left = leftOffset+"px";
                     }
                     }
                 })
-                console.log("LEFT pressed");
                 }
                 break;
-            case 39:
-            case 68:
+            case 39://right arrow code
+            case 68://D code
                 if(keyBoardVal){
                 boxArr.forEach((ele) => {
                     if(ele.props.id == liItemId)
                     {
-                    //event target is string value    
-                    var leftOffset = parseInt((event.target.style.left.split("px")[0])) + 15;
+                    var leftOffset = parseInt((document.querySelector(`#${liItemId} div`).style.left.split("px")[0])) + 15;
                     if(leftOffset < 730)
                     {
-                        event.target.style.left = leftOffset+"px";
+                        document.querySelector(`#${liItemId} div`).style.left = leftOffset+"px";
                     }
                     }
                 })
-                console.log("RIGHT pressed");
                 }
                 break;
             default:
                 break;
         }
     }
+    
+    const keyboardHandler = ()=>{
+        //keyboardToggle Handler
+        keyBoardVal?setKeyboardVal(keyval=>!keyval):setKeyboardVal(keyval=> !keyval);
+    }
 
     const deleteBoxHandler =()=>{
-        console.log(keyBoardVal);
         setBoxCount(boxCount-1);
         setBoxArr(boxArr.filter(ele =>ele.props.id != liItemId)) //liItemId set in box click handler
     }
      
     const boxClickHandler=(event)=>{
         event.preventDefault();
-        console.log("box clicked");
-        console.log(keyBoardVal)
         var eleId = event.target.parentNode.id.toString();
         setLiItemId(eleId);
         if(eleId){
@@ -126,9 +118,9 @@ const Layout = ()=>{
     }
 
     return(
-        <div className="parentDiv">
+        <div className="parentDiv" onKeyDown={(event)=>boxKeyCheckHandler(event)} tabIndex="0">
             <button className="button1" onClick={addBoxHandler}>Add box</button>
-            <button className="button2" onClick={()=>setKeyboardVal(keyBoardVal?false:true)}>Toggle Keyboard</button>
+            <button className="button2" onClick={keyboardHandler}>Toggle Keyboard</button>
             <p>{keyBoardVal?"Keyboard Enabled":"Keyboard Disabled"}</p>
             <div id="divUl">
                 <ul id="ulListId">

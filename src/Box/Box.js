@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import './Box.css';
 const Box = (props)=>{
 
@@ -14,7 +14,7 @@ const Box = (props)=>{
     return(
     <li style={listItemStyle} id={props.id} >
     <div style={boxStyle} className="box" 
-    onClick={(event)=>props.boxClickHandler(event)} onKeyDown={(event)=>props.boxKeyCheckHandler(event)} tabIndex="0"><p>Box{props.id}</p>
+    onClick={(event)=>props.boxClickHandler(event)}><p>Box {props.id.toString().split("item")[1]}</p>
     </div>
     </li>
     );
